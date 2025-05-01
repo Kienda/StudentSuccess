@@ -1,0 +1,10 @@
+<h1>Recommendations for {{major}} Students</h1>
+{{#each recommendations}}
+  <div>
+    <h3>{{title}}</h3>
+    <p>{{description}}</p>
+    <a href="{{url}}" target="_blank">Learn More</a>
+  </div>
+{{else}}
+  <p>No recommendations available for your major.</p>
+{{/each}}

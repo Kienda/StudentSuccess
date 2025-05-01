@@ -1,0 +1,52 @@
+{{! views/edit-student.hbs }}
+<div class="edit-container">
+  <h2>Edit Student #{{student.id}}</h2>
+
+  <form action="/students/{{student.id}}?_method=PUT" method="POST" class="edit-form">
+    <div class="form-group">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" value="{{student.name}}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" value="{{student.email}}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="student_id">Student ID:</label>
+      <input type="text" id="student_id" name="student_id" value="{{student.student_id}}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="major">Major:</label>
+      <input type="text" id="major" name="major" value="{{student.major}}">
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" name="status" class="form-control">
+        <option value="Freshman" {{#eq student.status "Freshman"}}selected{{/eq}}>Freshman</option>
+        <option value="Sophomore" {{#eq student.status "Sophomore"}}selected{{/eq}}>Sophomore</option>
+        <option value="Junior" {{#eq student.status "Junior"}}selected{{/eq}}>Junior</option>
+        <option value="Senior" {{#eq student.status "Senior"}}selected{{/eq}}>Senior</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="gpa">GPA:</label>
+      <input type="number" id="gpa" name="gpa" step="0.01" min="0" max="4" 
+             value="{{student.gpa}}" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="semester">Current Semester:</label>
+      <input type="text" id="semester" name="semester" value="{{student.semester}}">
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-update">Update Student</button>
+      <a href="/students" class="btn btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>

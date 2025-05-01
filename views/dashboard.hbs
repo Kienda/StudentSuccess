@@ -1,0 +1,32 @@
+{{!-- // views/dashboard.hbs --}}
+<section class="dashboard">
+  <h2>Welcome, {{student.name}}</h2>
+  <p>Email: {{student.email}}</p>
+</section>
+<section class="ressources">
+  <div class="guidance">
+    <h3>Guidance</h3>
+    {{#each guidance}}
+      <li>
+        <strong>Status Level:</strong> {{this.status_level}}<br>
+        <strong>Major:</strong> {{this.major}}<br>
+        <p>{{this.content}}</p>
+      </li>
+    {{else}}
+      <p>No guidance available for your profile.</p>
+    {{/each}}
+  </div>
+
+  <div class="recommend">
+    <h3>Recommendations</h3>
+    {{#each recommendations}}
+      <li>
+        <strong>{{this.title}}</strong><br>
+        <em>{{this.type}}</em> - <a href="{{this.url}}" target="_blank">{{this.url}}</a><br>
+        <p>{{this.description}}</p>
+      </li>
+    {{else}}
+      <p>No recommendations available for your major at the moment.</p>
+    {{/each}}
+  </div>
+</section>

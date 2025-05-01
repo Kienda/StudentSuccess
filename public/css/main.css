@@ -1,0 +1,246 @@
+/* main css  */
+
+
+.mockupContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5rem 2rem;
+  background: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.mockupContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mockupContainer h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #075dfe; 
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mockupContainer h1 br {
+  display: none;
+}
+
+.mockup {
+  max-height: 350px;
+  width: auto;
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(7, 93, 254, 0.2);
+  transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+
+}
+
+.mockup:hover {
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+  box-shadow: 0 20px 40px rgba(7, 93, 254, 0.3);
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mockupContainer {
+    padding: 4rem 2rem;
+  }
+  
+  .mockupContainer h1 {
+    font-size: 2.8rem;
+    max-width: 500px;
+  }
+  
+  .mockup {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mockupContainer {
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    gap: 2rem;
+  }
+  
+
+  .mockup {
+    max-height: 250px;
+    transform: none;
+  }
+  
+  .mockup:hover {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 480px) {
+  .mockupContainer h1 {
+    font-size: 2.2rem;
+  }
+  
+  .mockup {
+    max-height: 200px;
+  }
+}
+/* Access Section */
+.accessContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  min-width: 100vw;
+}
+
+.accessContainer button {
+  background-color: #075dfe;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(7, 93, 254, 0.2);
+}
+
+.accessContainer button:hover {
+  background-color: #0548d1;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(7, 93, 254, 0.3);
+}
+
+.accessContainer button a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Resources & Partners Sections */
+.resources-section, 
+.partners-section {
+  padding: 4rem 0;
+}
+
+.resources-section h2,
+.partners-section h2 {
+  font-size: 2.2rem;
+  color: #075dfe;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.resources-section h2::after,
+.partners-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: #075dfe;
+  border-radius: 2px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(7, 93, 254, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(7, 93, 254, 0.15);
+}
+
+.card img {
+  width: 80%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(7, 93, 254, 0.1);
+}
+
+.info {
+  padding: 1.8rem;
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: #1a202c;
+}
+
+.card p {
+  color: #4a5568;
+  margin-bottom: 1.8rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.card a {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background-color: #075dfe;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.card a:hover {
+  background-color: #0548d1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .accessContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .resources-section, 
+  .partners-section {
+    padding: 3rem 0;
+  }
+  
+  .cards {
+    grid-template-columns: 1fr;
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .info {
+    padding: 1.2rem;
+  }
+}

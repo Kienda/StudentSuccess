@@ -1,0 +1,89 @@
+/* Login Page Styles */
+.form-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f9ff 0%, #e6f0ff 100%);
+}
+
+.logContainer {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(7, 93, 254, 0.1);
+  border: 1px solid rgba(7, 93, 254, 0.1);
+}
+
+.logContainer h2 {
+  font-size: 2rem;
+  color: #075dfe;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.logContainer h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #075dfe;
+  border-radius: 2px;
+}
+
+.logContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.logContainer input {
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.logContainer input:focus {
+  outline: none;
+  border-color: #075dfe;
+  box-shadow: 0 0 0 3px rgba(7, 93, 254, 0.1);
+}
+
+.logContainer button {
+  background-color: #075dfe;
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.logContainer button:hover {
+  background-color: #0548d1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(7, 93, 254, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .logContainer {
+    padding: 2rem 1.5rem;
+  }
+  
+  .logContainer h2 {
+    font-size: 1.8rem;
+  }
+}

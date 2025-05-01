@@ -1,0 +1,93 @@
+<section class="newStudent" aria-labelledby="newStudentHeading">
+  <h2 id="newStudentHeading">Add New Student</h2>
+  <form action="/students" method="POST" class="form-grid">
+    <div class="form-group">
+      <label for="name">Full Name:</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        required
+        aria-required="true"
+        autocomplete="name"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address:</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        required
+        aria-required="true"
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="student_id">Student ID:</label>
+      <input
+        id="student_id"
+        name="student_id"
+        type="number"
+        required
+        aria-required="true"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="major">Major/Program:</label>
+      <input
+        id="major"
+        name="major"
+        type="text"
+        autocomplete="organization-title"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="academic_level">Academic Level:</label>
+      <select id="academic_level" name="academic_level">
+        <option value="">Select Level</option>
+        <option value="Freshman">Freshman</option>
+        <option value="Sophomore">Sophomore</option>
+        <option value="Junior">Junior</option>
+        <option value="Senior">Senior</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="gpa">GPA (0.0-4.0):</label>
+      <input id="gpa" name="gpa" type="number" min="0" max="4" step="0.01" />
+    </div>
+
+    <div class="form-group">
+      <label for="semester">Current Semester:</label>
+      <input
+        id="semester"
+        name="semester"
+        type="text"
+        placeholder="e.g., Fall 2023"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Create Password:</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        required
+        aria-required="true"
+        autocomplete="new-password"
+      />
+      <small class="hint">Minimum 8 characters with letters and numbers</small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">Add Student</button>
+      <button type="reset" class="btn-secondary">Clear Form</button>
+    </div>
+  </form>
+</section>

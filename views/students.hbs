@@ -1,0 +1,30 @@
+{{! views/students.hbs }}
+<section class="student-list">
+  <h2>Student List</h2>
+  <div class="grid-container">
+    {{#each students}}
+      <div class="student-card">
+        <h3>{{name}}</h3>
+        <p>Email: {{email}}</p>
+        <p>ID: {{student_id}}</p>
+        <p>Major: {{major}}</p>
+        <p>GPA: {{gpa}}</p>
+        <p>Status: {{status}}</p>
+        <p>Semester: {{semester}}</p>
+
+        <div class="action-buttons">
+
+          <a href="/students/{{id}}/edit" class="edit-link">Edit</a>
+
+          <form
+            action="/students/{{id}}?_method=DELETE"
+            method="POST"
+            class="delete-form"
+          >
+            <button type="submit" class="btn-delete">Delete</button>
+          </form>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</section>

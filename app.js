@@ -6,19 +6,24 @@ const session = require('express-session');
 const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
 const methodOverride = require('method-override');
-// const pageRoutes = require('./routes/pageRoutes'); // <-- import the routes
-
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const recommendationsRoutes = require('./routes/recommendations');
+const guidanceRoutes = require('./routes/guidance');
 
 const app = express();
 const PORT = 1800;
 
 // MIDDLEWARE SETUP (CRITICAL ORDER)
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.json());
 app.use(express.static('public'));
-// app.use('/', pageRoutes);
+app.use('/recommendations', recommendationsRoutes);
+app.use('/guidance', guidanceRoutes);
 
+// app.use('/', pageRoutes);
 // Session
 app.use(session({
   secret: process.env.SESSION_SECRET || 'supersecretkey',
@@ -47,6 +52,7 @@ pool.query('SELECT NOW()', (err, res) => {
   }
 });
 
+
 // ======= VIEW ENGINE (Handlebars) ==========
 app.engine('hbs', engine({
   extname: '.hbs',
@@ -57,8 +63,29 @@ app.engine('hbs', engine({
     eq: (a, b) => a === b
   }
 }));
+
 app.set('view engine', 'hbs');
 app.set('views', './views');
+
+
+// Middleware
+function requireAuth(req, res, next) {
+  const token = req.cookies.token;
+
+  if (!token) {
+    const redirectUrl = encodeURIComponent(req.originalUrl);
+    return res.redirect(`/account/login-page?redirect=${redirectUrl}`);
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.SERVER_SECRET || 'supersecretkey');
+    req.user = decoded;
+    next();
+  } catch (err) {
+    console.error('Invalid token:', err);
+    return res.redirect(`/account/login-page?redirect=${encodeURIComponent(req.originalUrl)}`);
+  }
+}
 
 // ======= ROUTES ==========
 
@@ -67,53 +94,63 @@ app.get('/', (req, res) => {
   res.render('home', { title: 'Student Success' });
 });
 
-
 // Show form to add student
 app.get('/students/new', (req, res) => {
   res.render('new-student');
 });
 
-// Login Page
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { title: 'Login' });
 });
 
-// Login Handler (POST)
+// Login Page
 app.post('/login', async (req, res) => {
+  console.log("Hit login post");
   const { email, password } = req.body;
+  console.log("Email: " + email);
   try {
-    // 1. Find student by email
+    console.log("hit try");
     const result = await pool.query('SELECT * FROM students WHERE email = $1', [email]);
+    console.log("Result: " + result);
     const student = result.rows[0];
 
-    // 2. Verify student exists
+    console.log("result: " + student);
+
     if (!student) {
+      console.log("Not student");
       return res.status(401).render('login', { error: 'Invalid email' });
     }
-
-    // 3. Verify password
+    console.log("Hit before Match");
     const match = await bcrypt.compare(password, student.password);
+    console.log("Hit After match");
     if (!match) {
+      console.log("HIT NOT MATCH");
       return res.status(401).render('login', { error: 'Invalid password' });
     }
 
-    // 4. Set session
     req.session.student = {
       id: student.id,
       email: student.email,
-      name: student.name
+      name: student.name,
+      role: student.role
     };
 
-    // 5. Redirect to dashboard
-    res.redirect('/dashboard');
+    // ✅ Redirect based on role
+    if (student.role === 'admin') {
+      res.redirect('/admin');
+    } else {
+      res.redirect('/dashboard');
+    }
+
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).render('login', { error: 'An error occurred during login' });
   }
 });
 
+
 // Student Creation (should be separate from login)
-app.post('/students', async (req, res) => {
+app.post('/students', requireAuth, async (req, res) => {
   const { name, email, student_id, major, status, gpa, semester, password } = req.body;
 
   if (!name || !email || !student_id || !password) {
@@ -268,14 +305,52 @@ app.put('/students/:id', async (req, res) => {
   }
 });
 
-// Logout
-app.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.redirect('/');
+function requireAdmin(req, res, next) {
+  if (req.session.student && req.session.student.role === 'admin') {
+    return next();
+  }
+  return res.status(403).render('error', { message: 'Access denied. Admins only.' });
+}
+
+
+// Admin-only routes
+
+app.get('/admin', requireAdmin, (req, res) => {
+  res.render('admin', {
+    title: 'Admin Dashboard',
+    student: req.session.student  // optionally used for greeting/admin info
+  });
+});
+
+app.get('/students', requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM students ORDER BY name');
+    res.render('students', { students: result.rows });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/recommendPages', requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM recommendations');
+    res.render('recommendPages', { recommendations: result.rows });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/guidePage', requireAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM guidance');
+    res.render('guidePage', { guidance: result.rows });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 //guidance route
-app.get('/guidance', async (req, res) => {
+app.get('/guidePages', async (req, res) => {
   const { major, status, gpa } = req.query;
 
   try {
@@ -287,14 +362,14 @@ app.get('/guidance', async (req, res) => {
       [major, status, gpa]
     );
 
-    res.render('guidance', { guidance: result.rows });
+    res.render('guidePages', { guidance: result.rows });
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
 //recommendations route
-app.get('/recommendations', async (req, res) => {
+app.get('/recommendPage', async (req, res) => {
   const { major } = req.query;
 
   try {
@@ -303,12 +378,18 @@ app.get('/recommendations', async (req, res) => {
       [major]
     );
 
-    res.render('recommendations', { recommendations: result.rows });
+    res.render('recommendPage', { recommendations: result.rows });
   } catch (error) {
     res.status(500).send(error.message);
   }
 });
 
+
+// Logout
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
 // ======= SERVER ==========
 app.listen(PORT, () => {
   console.log(`The server of the final project is running on http://localhost:${PORT}`);

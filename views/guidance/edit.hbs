@@ -1,0 +1,47 @@
+<h2>Edit Guidance</h2>
+<form action="/guidance/{{guidance.id}}" method="POST">
+  <input type="hidden" name="_method" value="PUT" />
+
+  <label for="min_gpa">Minimum GPA:</label>
+  <input
+    type="number"
+    step="0.01"
+    name="min_gpa"
+    id="min_gpa"
+    value="{{guidance.min_gpa}}"
+    required
+  />
+
+  <label for="max_gpa">Maximum GPA:</label>
+  <input
+    type="number"
+    step="0.01"
+    name="max_gpa"
+    id="max_gpa"
+    value="{{guidance.max_gpa}}"
+    required
+  />
+
+  <label for="status_level">Status Level:</label>
+  <input
+    type="text"
+    name="status_level"
+    id="status_level"
+    value="{{guidance.status_level}}"
+    required
+  />
+
+  <label for="major">Major:</label>
+  <input
+    type="text"
+    name="major"
+    id="major"
+    value="{{guidance.major}}"
+    required
+  />
+
+  <label for="content">Content:</label>
+  <textarea name="content" id="content" required>{{guidance.content}}</textarea>
+
+  <button type="submit">Update Guidance</button>
+</form>

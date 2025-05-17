@@ -1,0 +1,28 @@
+<section class="admin">
+  <h2 class="admin-title">Recommendations</h2>
+  <a href="/recommendations/new" class="admin-link">+ Add New Recommendation</a>
+
+  <div class="admin-container">
+    {{#each recommendations}}
+      <div class="student-card">
+        <h3>{{title}}</h3>
+        <p><strong>Major:</strong> {{major}}</p>
+        <p><strong>Type:</strong> {{type}}</p>
+        <p><strong>Description:</strong> {{description}}</p>
+        <p><a href="{{url}}" target="_blank">Link</a></p>
+
+        <div class="action-buttons">
+          <a href="/recommendations/{{id}}/edit" class="edit-link">Edit</a>
+
+          <form
+            action="/recommendations/{{id}}?_method=DELETE"
+            method="POST"
+            class="delete-form"
+          >
+            <button type="submit" class="btn-delete">Delete</button>
+          </form>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</section>

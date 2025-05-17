@@ -1,0 +1,36 @@
+.admin {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.admin-title {
+  font-size: 2rem;
+  color: #075dfe;
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.admin-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.admin-link {
+  background-color: #075dfe;
+  color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(7, 93, 254, 0.1);
+}
+
+.admin-link:hover {
+  background-color: #0548d1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(7, 93, 254, 0.2);
+}

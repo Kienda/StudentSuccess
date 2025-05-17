@@ -24,6 +24,7 @@ router.post('/login', async (req, res) => {
 
     req.session.student = student;
 
+
     // Get relevant guidance and recommendations
     const guidanceQuery = await pool.query(`
       SELECT * FROM guidance
@@ -36,11 +37,17 @@ router.post('/login', async (req, res) => {
       SELECT * FROM recommendations
       WHERE major = $1
     `, [student.major]);
-    res.render('dashboard', {
-      student,
-      guidance: guidanceQuery.rows,
-      recommendations: recQuery.rows
-    });
+    // ✅ Redirect based on role
+    if (student.role === 'admin') {
+      res.redirect('/admin');
+    } else {
+      res.render('dashboard', {
+        student,
+        guidance: guidanceQuery.rows,
+        recommendations: recQuery.rows
+      });
+    }
+
   } catch (err) {
     res.status(500).send(err.message);
   }

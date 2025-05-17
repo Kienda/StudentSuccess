@@ -1,0 +1,29 @@
+.student-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 300px;
+  margin-bottom: 2rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.edit-link, .btn-delete {
+  background-color: #075dfe;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: red;
+}

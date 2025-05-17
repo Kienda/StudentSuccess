@@ -1,0 +1,25 @@
+<section class="guidance-list">
+  <h2>Guidance List</h2>
+  <div class="grid-container">
+    {{#each guidance}}
+      <div class="guidance-card">
+        <h3>{{major}} - {{status_level}}</h3>
+        <p>GPA Range: {{min_gpa}} to {{max_gpa}}</p>
+        <p>{{content}}</p>
+
+        <div class="action-buttons">
+          <a href="/guidance/{{id}}/edit" class="edit-link">Edit</a>
+
+          <form
+            action="/guidance/{{id}}?_method=DELETE"
+            method="POST"
+            class="delete-form"
+          >
+            <button type="submit" class="btn-delete">Delete</button>
+          </form>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <a href="/guidance/new" class="btn-create">Add New Guidance</a>
+</section>

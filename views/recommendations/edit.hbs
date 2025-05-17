@@ -1,0 +1,16 @@
+<h2 class="admin-title">Edit Recommendation</h2>
+<form
+  action="/recommendations/{{recommendation.id}}?_method=PUT"
+  method="POST"
+  class="admin-form"
+>
+  <input type="text" name="title" value="{{recommendation.title}}" required />
+  <input type="text" name="major" value="{{recommendation.major}}" required />
+  <input type="text" name="type" value="{{recommendation.type}}" required />
+  <input type="url" name="url" value="{{recommendation.url}}" required />
+  <textarea
+    name="description"
+    required
+  >{{recommendation.description}}</textarea>
+  <button type="submit" class="admin-link">Update</button>
+</form>

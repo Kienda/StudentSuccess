@@ -107,7 +107,7 @@ npm install
 Create a .env file in the root directory:
 
 env
-Copy code
+
 DB_USER=your_postgres_user
 DB_HOST=localhost
 DB_NAME=your_db_name
@@ -174,8 +174,7 @@ link (optional)
 Run the App
 Start the server:
 
-bash
-Copy code
+
 node app.js
 The application runs on:
 

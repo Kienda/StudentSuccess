@@ -82,9 +82,6 @@ StudentSuccess/
 ├─ .env
 └─ package.json
 
-yaml
-Copy code
-
 ---
 
 ## Getting Started

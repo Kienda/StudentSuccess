@@ -6,9 +6,6 @@ This project is the **web version** of my College Navigator concept, built to su
 
 ---
 
-## Demo / Screens
-> Add screenshots or a short GIF here (optional)
-
 ---
 
 ## Problem
